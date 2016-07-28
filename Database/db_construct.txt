@@ -1,0 +1,28 @@
+CREATE TABLE Cocktails (
+	_id integer PRIMARY KEY AUTOINCREMENT,
+	name text,
+	category text,
+	author text
+);
+
+CREATE TABLE Ingredients (
+	_id integer PRIMARY KEY AUTOINCREMENT,
+	name text,
+	type text
+);
+
+CREATE TABLE Methods (
+	_id integer PRIMARY KEY AUTOINCREMENT,
+	content text,
+	cocktail_id integer,
+	method_number integer
+);
+
+CREATE TABLE Ingredient-to-cocktail (
+	cocktail_id integer,
+	ingredient_id integer,
+	quantity float,
+	measurement text,
+	is_main integer,
+	is_garnish integer
+);
