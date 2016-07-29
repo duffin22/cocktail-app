@@ -5,12 +5,12 @@ package com.hfad.cocktailapp;
  */
 public class CocktailIngredient {
     private String name, type;
-    private double quantity;
+    private int quantity;
     private String measurement;
     private boolean isMain, isGarnish;
 
     //4-part constuctor sets isMain and isGarnish to false
-    public CocktailIngredient(String name, String type, double quantity, String measurement) {
+    public CocktailIngredient(String name, String type, int quantity, String measurement) {
         this.name = name;
         this.type = type;
         this.quantity = quantity;
@@ -20,7 +20,7 @@ public class CocktailIngredient {
     }
 
     //6-part constructor where isMain and isGarnish can be set
-    public CocktailIngredient(String name, String type, double quantity, String measurement, boolean isMain, boolean isGarnish) {
+    public CocktailIngredient(String name, String type, int quantity, String measurement, boolean isMain, boolean isGarnish) {
         this.name = name;
         this.type = type;
         this.quantity = quantity;
@@ -29,6 +29,10 @@ public class CocktailIngredient {
         this.isGarnish = isGarnish;
     }
 
+
+    public String getQuantityMeasure() {
+        return "" + quantity + measurement;
+    }
 
     public String getName() {
         return name;
@@ -50,7 +54,7 @@ public class CocktailIngredient {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

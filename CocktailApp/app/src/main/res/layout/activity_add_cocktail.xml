@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.hfad.cocktailapp.AddCocktail"
+    tools:context=".AddCocktailActivity"
     android:orientation="vertical">
 
     <ScrollView
@@ -31,84 +31,44 @@
                 android:hint="Cocktail type"
             />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#000"
-                />
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Ingredient"/>
+                android:text="Add Ingredient"
+                android:id="@+id/ingredientButton"/>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical" android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="50dp"
-                android:id="@+id/addIngredient"
-                android:visibility="gone">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ingredient"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Quantity"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Measurement"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="This is a main ingredient"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="This is a garnish"/>
-
-            </LinearLayout>
-
-
-            <ListView
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="vertical"
                 android:layout_height="wrap_content"
                 android:id="@+id/ingredientList"
                 android:layout_marginRight="4dp"
                 android:layout_marginLeft="4dp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp">
+            </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#000"
-                />
+            <!--<ListView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/ingredientList"-->
+                <!--android:layout_marginRight="4dp"-->
+                <!--android:layout_marginLeft="4dp"-->
+                <!--android:layout_marginBottom="4dp" />-->
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Method"/>
+                android:text="Add Method"
+                android:id="@+id/methodButton"/>
 
-            <ListView
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="vertical"
                 android:layout_height="wrap_content"
                 android:id="@+id/methodList"
                 android:layout_marginRight="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginBottom="4dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#000"
-                />
 
         </LinearLayout>
 

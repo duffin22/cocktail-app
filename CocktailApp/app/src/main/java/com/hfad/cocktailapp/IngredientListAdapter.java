@@ -17,10 +17,10 @@ import java.util.ArrayList;
 public class IngredientListAdapter extends BaseAdapter {
 
         private final LayoutInflater inflater;
-        private final ArrayList<String> listItems;
+        private final ArrayList<CocktailIngredient> listItems;
         private final Context context;
 
-        public IngredientListAdapter(Context context, ArrayList<String> listItems) {
+        public IngredientListAdapter(Context context, ArrayList<CocktailIngredient> listItems) {
             inflater = LayoutInflater.from(context);
             this.listItems = listItems;
             this.context = context;
@@ -49,22 +49,26 @@ public class IngredientListAdapter extends BaseAdapter {
             Log.d("Postion: ", "" + position);
 
             View v = child;
-            ViewGroup vG=parent;
-            TextView words;
+            ViewGroup vG = parent;
+            TextView name, quantity;
 
             if (v == null) {
                 v = inflater.inflate(R.layout.ingredient_list_item, parent, false);
             }
 
-            words = (TextView) v.findViewById(R.id.ingredientName);
+            name = (TextView) v.findViewById(R.id.ingredientName);
+            quantity = (TextView) v.findViewById(R.id.ingredientQuantity);
 
-            words.setText(String.valueOf(listItems.get(position)));
+            CocktailIngredient current = listItems.get(position);
+
+            String currentName = current.getName();
+            String currentQuantity = current.getQuantityMeasure();
+
+            name.setText(currentName);
+            quantity.setText(currentQuantity);
+
 
             Log.d("Pointer","getView used at position " +position);
-
-            if (position==(listItems.size()-1)) {
-                vG.setMinimumHeight(23*position);
-            }
 
             return v;
         }

@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:id="@+id/methodListItem">
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#ddd"
+    android:id="@+id/spacer"
+    />
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:paddingRight="10dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textAlignment="textEnd"
+        android:text="1."
+        android:id="@+id/ingredientQuantity"
+        android:textStyle="italic"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="3"
         android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:textAlignment="textStart"
+        android:text="Blah blah blah!!!"
         android:id="@+id/ingredientName"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ingredientQuantity"/>
+</LinearLayout>
+
 
 </LinearLayout>
+
