@@ -2,6 +2,7 @@ package com.hfad.cocktailapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,7 +17,12 @@ public class AddIngredientActivity extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                MySQLDBHelper db = MySQLDBHelper.getInstance(AddIngredientActivity.this);
+
+                String s = db.getCocktailName(1);
+
+                Log.i("MATTTEST",s);
+
             }
         });
 

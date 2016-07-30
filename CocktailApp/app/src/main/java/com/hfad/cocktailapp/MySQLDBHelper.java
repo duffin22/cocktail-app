@@ -32,6 +32,9 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        for (String s : S.CREATE_TABLES) {
+            db.execSQL(s);
+        }
     }
 
     @Override
@@ -46,6 +49,23 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
             Log.i("SINGLETON", "has been accessed.....");
         }
         return DB;
+    }
+
+    public String getCocktailName(int id) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String sql = "SELECT "+S.COCKTAIL_COL_NAME +
+                " FROM " + S.COCKTAIL_TABLE_NAME +
+                " WHERE "+ S.COCKTAIL_COL_ID + " = "+ (id)+";";
+
+        Cursor cursor = db.rawQuery(sql,null);
+
+        cursor.moveToFirst();
+
+        String s = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_NAME));
+
+        return s;
     }
 
 

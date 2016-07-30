@@ -1,5 +1,8 @@
 package com.hfad.cocktailapp;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 /**
  * Created by matthewtduffin on 29/07/16.
  */
@@ -31,67 +34,90 @@ public class S {
     public static final String INGREDIENT_TO_COCKTAIL_COL_IS_MAIN ="is_main";
     public static final String INGREDIENT_TO_COCKTAIL_COL_IS_GARNISH ="is_garnish";
 
+    public static final String CREATE_COCKTAIL_TABLE =
+            "CREATE TABLE " + COCKTAIL_TABLE_NAME + "(" +
+                    COCKTAIL_COL_ID + " integer PRIMARY KEY AUTOINCREMENT, " +
+                    COCKTAIL_COL_NAME + " text, " +
+                    COCKTAIL_COL_CATEGORY + " text, " +
+                    COCKTAIL_COL_AUTHOR + " text);";
 
-//******************* Helper methods for COCKTAILS table ***********************
+    public static final String CREATE_INGREDIENT_TABLE =
+            "CREATE TABLE " + INGREDIENT_TABLE_NAME + "(" +
+                    INGREDIENT_COL_ID + " integer PRIMARY KEY AUTOINCREMENT, " +
+                    INGREDIENT_COL_NAME + " text, " +
+                    INGREDIENT_COL_TYPE + " text);";
 
-    public static void addCocktailToDB(String name, String category, String author) {
+    public static final String CREATE_METHOD_TABLE =
+            "CREATE TABLE " + METHOD_TABLE_NAME + "(" +
+                    METHOD_COL_ID + " integer PRIMARY KEY AUTOINCREMENT, " +
+                    METHOD_COL_CONTENT + " text, " +
+                    METHOD_COL_COCKTAIL_ID + " integer, " +
+                    METHOD_COL_METHOD_NUMBER + " integer);";
 
+    public static final String CREATE_INGREDIENT_TO_COCKTAIL_TABLE =
+            "CREATE TABLE " + INGREDIENT_TO_COCKTAIL_TABLE_NAME + "(" +
+                    INGREDIENT_TO_COCKTAIL_COL_COCKTAIL_ID + " integer, " +
+                    INGREDIENT_TO_COCKTAIL_COL_INGREDIENT_ID + " integer, " +
+                    INGREDIENT_TO_COCKTAIL_COL_QUANTITY + " integer, " +
+                    INGREDIENT_TO_COCKTAIL_COL_MEASUREMENT + " text, " +
+                    INGREDIENT_TO_COCKTAIL_COL_IS_MAIN + " integer, " +
+                    INGREDIENT_TO_COCKTAIL_COL_IS_GARNISH + " integer);";
+
+    public static final String[] CREATE_TABLES = {CREATE_COCKTAIL_TABLE, CREATE_INGREDIENT_TABLE, CREATE_INGREDIENT_TO_COCKTAIL_TABLE, CREATE_METHOD_TABLE};
+
+    public static boolean addIngredientToDB(SQLiteDatabase db, String name, String type) {
+
+        String s = "INSERT INTO " + INGREDIENT_TABLE_NAME +
+                " VALUES (null, '" +
+                name + "', '" +
+                type + "');";
+
+        db.execSQL(s);
+
+        return true;
     }
 
+    public static boolean addCocktailToDB(SQLiteDatabase db, String name, String category, String author) {
 
-    public static int getCocktailId(String name) {
+        String s = "INSERT INTO " + COCKTAIL_TABLE_NAME +
+                " VALUES (null, '" +
+                name + "', '" +
+                category + "', '" +
+                author + "');";
 
+        db.execSQL(s);
+
+        return true;
     }
 
-    public static int getCocktailName(int id) {
+    public static boolean addMethodToDB(SQLiteDatabase db, String content, int cocktailId, int methodNumber) {
 
+        String s = "INSERT INTO " + METHOD_TABLE_NAME +
+                " VALUES (null, '" +
+                content + "', " +
+                cocktailId + ", " +
+                methodNumber + ");";
+
+        db.execSQL(s);
+
+        return true;
     }
 
-    public static int getCocktailCategory(String name) {
-        int id = getCocktailId(name);
-        return getCocktailCategory(id);
+    public static boolean addCocktailIngredientToDB(SQLiteDatabase db, int cocktailId, int ingredientId, int quantity, String measurement, int isMain, int isGarnish) {
+
+        String s = "INSERT INTO " + INGREDIENT_TO_COCKTAIL_TABLE_NAME +
+                " VALUES (" +
+                cocktailId + ", " +
+                ingredientId + ", " +
+                quantity + ", '" +
+                measurement + "', " +
+                isMain + ", " +
+                isGarnish + ");";
+
+        db.execSQL(s);
+
+        return true;
     }
-
-    public static int getCocktailCategory(int id) {
-
-    }
-
-    public static int getCocktailAuthor(String name) {
-        int id = getCocktailId(name);
-        return getCocktailAuthor(id);
-    }
-
-    public static int getCocktailAuthor(int id) {
-
-    }
-
-//********************************************************************************
-
-//******************* Helper methods for INGREDIENTS table ***********************
-
-    public static void addIngredientToDB(String name, String type) {
-
-    }
-
-
-    public static int getIngredientId(String name) {
-
-    }
-
-    public static int getIngredientName(int id) {
-
-    }
-
-    public static int getIngredientType(String name) {
-        int id = getIngredientId(name);
-        return getIngredientType(id);
-    }
-
-    public static int getIngredientType(int id) {
-
-    }
-
-//********************************************************************************
 
 
 }
