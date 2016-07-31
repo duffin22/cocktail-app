@@ -68,12 +68,18 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
     }
 
 
+    public void addToDB(Cocktail cocktail) {
+        addToCocktailTable(cocktail);
+        addToMethodTable(cocktail);
+        addToCocktailIngredientTable(cocktail);
+    }
+
     public void addToCocktailTable(Cocktail cocktail) {
         //add the cocktail to the cocktail table of db
         SQLiteDatabase db = this.getWritableDatabase();
         boolean checker = true;
         int count = 2;
-        String name = cocktail.getName();
+        final String name = cocktail.getName();
         while (checker) {
             if (!containsCocktail(cocktail.getName())) {
                 addCocktailToDB(db,cocktail.getName(),cocktail.getCategory(), cocktail.getAuthor());

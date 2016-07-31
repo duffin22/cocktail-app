@@ -19,13 +19,16 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         Cocktail cocktail = new Cocktail();
-        helper.addToCocktailTable(cocktail);
-        helper.addToMethodTable(cocktail);
-        helper.addToCocktailIngredientTable(cocktail);
+        helper.addToDB(cocktail);
+        cocktail = new Cocktail();
+        helper.addToDB(cocktail);
+        cocktail = new Cocktail();
+        helper.addToDB(cocktail);
+        cocktail = new Cocktail();
+        helper.addToDB(cocktail);
+        cocktail = new Cocktail();
 
-        helper.addToCocktailTable(cocktail);
-        helper.addToMethodTable(cocktail);
-        helper.addToCocktailIngredientTable(cocktail);
+        helper.addToDB(cocktail);
 
 
         View addButton = (Button) findViewById(R.id.addCocktail);
