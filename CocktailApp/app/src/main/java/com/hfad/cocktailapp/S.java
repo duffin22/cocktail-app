@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
  * Created by matthewtduffin on 29/07/16.
  */
 public class S {
-    //class to hold strings with database references
     public static final String COCKTAIL_TABLE_NAME = "cocktails";
     public static final String INGREDIENT_TABLE_NAME = "ingredients";
     public static final String METHOD_TABLE_NAME = "methods";
@@ -64,60 +63,4 @@ public class S {
                     INGREDIENT_TO_COCKTAIL_COL_IS_GARNISH + " integer);";
 
     public static final String[] CREATE_TABLES = {CREATE_COCKTAIL_TABLE, CREATE_INGREDIENT_TABLE, CREATE_INGREDIENT_TO_COCKTAIL_TABLE, CREATE_METHOD_TABLE};
-
-    public static boolean addIngredientToDB(SQLiteDatabase db, String name, String type) {
-
-        String s = "INSERT INTO " + INGREDIENT_TABLE_NAME +
-                " VALUES (null, '" +
-                name + "', '" +
-                type + "');";
-
-        db.execSQL(s);
-
-        return true;
-    }
-
-    public static boolean addCocktailToDB(SQLiteDatabase db, String name, String category, String author) {
-
-        String s = "INSERT INTO " + COCKTAIL_TABLE_NAME +
-                " VALUES (null, '" +
-                name + "', '" +
-                category + "', '" +
-                author + "');";
-
-        db.execSQL(s);
-
-        return true;
-    }
-
-    public static boolean addMethodToDB(SQLiteDatabase db, String content, int cocktailId, int methodNumber) {
-
-        String s = "INSERT INTO " + METHOD_TABLE_NAME +
-                " VALUES (null, '" +
-                content + "', " +
-                cocktailId + ", " +
-                methodNumber + ");";
-
-        db.execSQL(s);
-
-        return true;
-    }
-
-    public static boolean addCocktailIngredientToDB(SQLiteDatabase db, int cocktailId, int ingredientId, int quantity, String measurement, int isMain, int isGarnish) {
-
-        String s = "INSERT INTO " + INGREDIENT_TO_COCKTAIL_TABLE_NAME +
-                " VALUES (" +
-                cocktailId + ", " +
-                ingredientId + ", " +
-                quantity + ", '" +
-                measurement + "', " +
-                isMain + ", " +
-                isGarnish + ");";
-
-        db.execSQL(s);
-
-        return true;
-    }
-
-
 }

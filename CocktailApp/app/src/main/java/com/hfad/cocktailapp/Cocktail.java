@@ -1,6 +1,7 @@
 package com.hfad.cocktailapp;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +12,24 @@ public class Cocktail {
     private String name, author, category;
     private List<MethodItem> methods;
     private List<CocktailIngredient> ingredients;
+    private int id = -1;
+
+    public Cocktail() {
+        List<MethodItem> meths = new ArrayList<>();
+        meths.add(new MethodItem("Do the first thing",1));
+        meths.add(new MethodItem("Do the second thing",2));
+        meths.add(new MethodItem("Do the third thing",3));
+
+        List<CocktailIngredient> ings = new ArrayList<>();
+        ings.add(new CocktailIngredient("Lime", "Fresh Fruit",4,"slices"));
+        ings.add(new CocktailIngredient("Rum", "Alcoholic",45,"ml"));
+
+        this.name = "Mojito";
+        this.author = "IBA Official";
+        this.category = "Summer Drink";
+        this.methods = meths;
+        this.ingredients = ings;
+    }
 
     public Cocktail(String name, String author, String category, List<MethodItem> methods, List<CocktailIngredient> ingredients) {
         this.name = name;
@@ -18,6 +37,14 @@ public class Cocktail {
         this.category = category;
         this.methods = methods;
         this.ingredients = ingredients;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

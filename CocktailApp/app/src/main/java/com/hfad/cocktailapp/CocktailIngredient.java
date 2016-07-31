@@ -1,34 +1,63 @@
 package com.hfad.cocktailapp;
 
+import android.database.sqlite.SQLiteDatabase;
+
 /**
  * Created by matthewtduffin on 28/07/16.
  */
 public class CocktailIngredient {
     private String name, type;
+    private int cocktailId = -1, ingredientId = -1;
     private int quantity;
     private String measurement;
-    private boolean isMain, isGarnish;
+    private int isMain, isGarnish;
 
-    //4-part constuctor sets isMain and isGarnish to false
+    //4-part constuctor sets isMain and isGarnish to false (0)
     public CocktailIngredient(String name, String type, int quantity, String measurement) {
         this.name = name;
         this.type = type;
         this.quantity = quantity;
         this.measurement = measurement;
-        this.isMain = false;
-        this.isGarnish = false;
+        this.isMain = 0;
+        this.isGarnish = 0;
+    }
+
+    public CocktailIngredient(int cocktailId, int ingredientId, int quantity, String measurement, int isMain, int isGarnish) {
+        this.cocktailId = cocktailId;
+        this.quantity = quantity;
+        this.measurement = measurement;
+        this.setMain(isMain);
+        this.setGarnish(isGarnish);
     }
 
     //6-part constructor where isMain and isGarnish can be set
-    public CocktailIngredient(String name, String type, int quantity, String measurement, boolean isMain, boolean isGarnish) {
+    public CocktailIngredient(String name, String type, int quantity, String measurement, int isMain, int isGarnish) {
         this.name = name;
         this.type = type;
         this.quantity = quantity;
         this.measurement = measurement;
-        this.isMain = isMain;
-        this.isGarnish = isGarnish;
+        this.setMain(isMain);
+        this.setGarnish(isGarnish);
     }
 
+
+//    public boolean addCocktailIngredientToDB(SQLiteDatabase db) {
+//
+//        if (!isIngredientInDB(this.name)) {
+//            S.addIngredientToDB(db, this.name, this.type);
+//        }
+//
+//        S.addCocktailIngredientToDB(db, this.cocktailId, this.ingredientId, this.quantity, this.measurement, this.isMain, this.isGarnish);
+//
+//        return true;
+//    }
+
+    public boolean isIngredientInDB(String name) {
+        if (true) {
+            return true;
+        }
+        return false;
+    }
 
     public String getQuantityMeasure() {
         return "" + quantity + measurement;
@@ -66,19 +95,28 @@ public class CocktailIngredient {
         this.measurement = measurement;
     }
 
-    public boolean isMain() {
-        return isMain;
+    public int isMain() {
+        return this.isMain;
     }
 
-    public void setMain(boolean main) {
-        isMain = main;
+    public void setMain(int main) {
+        if (main == 1) {
+            this.isMain = main;
+        } else {
+            this.isMain = 0;
+        }
     }
 
-    public boolean isGarnish() {
-        return isGarnish;
+    public int isGarnish() {
+        return this.isGarnish;
     }
 
-    public void setGarnish(boolean garnish) {
-        isGarnish = garnish;
+    public void setGarnish(int garnish) {
+        if (garnish == 1) {
+            this.isGarnish = garnish;
+        } else {
+            this.isMain = 0;
+        }
+
     }
 }
