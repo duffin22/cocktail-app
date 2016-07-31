@@ -92,6 +92,28 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         cocktail.setId(getCocktailId(cocktail.getName()));
     }
 
+    public List<Cocktail> getAllCocktails() {
+        List<Cocktail> cocktails = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String sql = "SELECT *" +
+                " FROM " + S.COCKTAIL_TABLE_NAME + ";";
+
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_NAME));
+            String category = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_CATEGORY));
+            String author = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_AUTHOR));
+            Cocktail c = new Cocktail(name, category, author);
+            cocktails.add(c);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return cocktails;
+    }
+
     public void addToMethodTable(Cocktail cocktail) {
         //add the cocktail's methods to the method table of db
 

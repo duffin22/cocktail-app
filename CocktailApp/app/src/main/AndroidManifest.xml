@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddCocktailActivity" />
-        <activity android:name=".AddIngredientActivity"></activity>
+        <activity android:name=".AddIngredientActivity" />
+        <activity android:name=".DetailViewActivity"></activity>
     </application>
 
 </manifest>

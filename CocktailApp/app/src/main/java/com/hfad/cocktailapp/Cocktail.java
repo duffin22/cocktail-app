@@ -30,6 +30,11 @@ public class Cocktail {
         this.methods = meths;
         this.ingredients = ings;
     }
+    public Cocktail(String name, String author, String category) {
+        this.name = name;
+        this.author = author;
+        this.category = category;
+    }
 
     public Cocktail(String name, String author, String category, List<MethodItem> methods, List<CocktailIngredient> ingredients) {
         this.name = name;
