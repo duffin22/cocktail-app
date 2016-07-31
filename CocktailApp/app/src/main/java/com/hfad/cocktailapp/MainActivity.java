@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         Cocktail cocktail = new Cocktail();
         helper.addToCocktailTable(cocktail);
+        helper.addToMethodTable(cocktail);
 
 
 

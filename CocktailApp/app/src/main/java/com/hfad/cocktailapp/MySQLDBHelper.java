@@ -63,7 +63,7 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
             //Step 2: add to methods table
             List<MethodItem> methods = cocktail.getMethods();
             for (MethodItem method : methods) {
-                addToMethodTable(method);
+                //addToMethodTable(method);
             }
 
             //Step 3: add to ingredients & cocktailIngredients tables
@@ -110,22 +110,9 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public void addToMethodTable(MethodItem method) {
-        //TODO: Create method to add the cocktail to the method table of db
-        SQLiteDatabase db = this.getWritableDatabase();
-        addMethodToDB(db, method.getMethod(), method.getCocktailId(), method.getPosition());
-    }
-
-    public void addToIngredientTable(CocktailIngredient ingredient) {
-        //TODO: Create method to add an ingredient to the ingredient table of db
-    }
-
-    public void addToCocktailIngredientTable(CocktailIngredient ingredient) {
-        //TODO: Create method to add the cocktail to the method table of db
-    }
 
     public void addToCocktailTable(Cocktail cocktail) {
-        //TODO: Create method to add the cocktail to the cocktail table of db
+        //add the cocktail to the cocktail table of db
         SQLiteDatabase db = this.getWritableDatabase();
         boolean checker = true;
         int count = 2;
@@ -140,6 +127,29 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
             }
         }
         cocktail.setId(getCocktailId(cocktail.getName()));
+    }
+
+    public void addToMethodTable(Cocktail cocktail) {
+        //add the cocktail's methods to the method table of db
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        List<MethodItem> methods = cocktail.getMethods();
+
+        for (MethodItem method : methods) {
+            method.setCocktailId(getCocktailId(cocktail.getName()));
+            addMethodToDB(db, method.getMethod(), method.getCocktailId(), method.getPosition());
+        }
+
+
+    }
+
+    public void addToIngredientTable(CocktailIngredient ingredient) {
+        //TODO: Create method to add an ingredient to the ingredient table of db
+    }
+
+    public void addToCocktailIngredientTable(CocktailIngredient ingredient) {
+        //TODO: Create method to add the cocktail to the method table of db
     }
 
     public int getCocktailId(String name) {
