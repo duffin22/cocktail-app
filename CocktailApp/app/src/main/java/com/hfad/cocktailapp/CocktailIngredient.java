@@ -40,23 +40,20 @@ public class CocktailIngredient {
         this.setGarnish(isGarnish);
     }
 
+    public int getCocktailId() {
+        return cocktailId;
+    }
 
-//    public boolean addCocktailIngredientToDB(SQLiteDatabase db) {
-//
-//        if (!isIngredientInDB(this.name)) {
-//            S.addIngredientToDB(db, this.name, this.type);
-//        }
-//
-//        S.addCocktailIngredientToDB(db, this.cocktailId, this.ingredientId, this.quantity, this.measurement, this.isMain, this.isGarnish);
-//
-//        return true;
-//    }
+    public void setCocktailId(int cocktailId) {
+        this.cocktailId = cocktailId;
+    }
 
-    public boolean isIngredientInDB(String name) {
-        if (true) {
-            return true;
-        }
-        return false;
+    public int getIngredientId() {
+        return ingredientId;
+    }
+
+    public void setIngredientId(int ingredientId) {
+        this.ingredientId = ingredientId;
     }
 
     public String getQuantityMeasure() {
@@ -79,7 +76,7 @@ public class CocktailIngredient {
         this.type = type;
     }
 
-    public double getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 

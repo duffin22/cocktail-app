@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
@@ -49,50 +50,6 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
             Log.i("SINGLETON", "has been accessed.....");
         }
         return DB;
-    }
-
-    public void addCocktailToDB(Cocktail cocktail, SQLiteDatabase db) {
-        if (containsCocktail(cocktail.getName())) {
-            //what to do if cocktail name is not unique
-        } else {
-            //TODO: Call methods to add all relevant cocktail information to tables
-
-            //Step 1: add to cocktail table
-            addToCocktailTable(cocktail);
-
-            //Step 2: add to methods table
-            List<MethodItem> methods = cocktail.getMethods();
-            for (MethodItem method : methods) {
-                //addToMethodTable(method);
-            }
-
-            //Step 3: add to ingredients & cocktailIngredients tables
-            List<CocktailIngredient> cocktailIngredients = cocktail.getIngredients();
-            for (CocktailIngredient ings : cocktailIngredients) {
-                if (!containsIngredient(ings.getName())) {
-                    addToIngredientTable(ings);
-                }
-                addToCocktailIngredientTable(ings);
-            }
-
-            //set the id of the cocktail after it has been added to the table
-        }
-    }
-
-    public void addIngredientToDB(SQLiteDatabase db, Ingredient ingredient) {
-        addIngredientToDB(db, ingredient.getName(), ingredient.getType());
-        ingredient.setId(getIngredientId(ingredient.getName()));
-    }
-
-
-    public void addIngredientToDB(SQLiteDatabase db, String name, String type) {
-
-        String s = "INSERT INTO " + S.INGREDIENT_TABLE_NAME +
-                " VALUES (null, '" +
-                name + "', '" +
-                type + "');";
-
-        db.execSQL(s);
     }
 
     public boolean containsCocktail(String name) {
@@ -144,12 +101,28 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addToIngredientTable(CocktailIngredient ingredient) {
-        //TODO: Create method to add an ingredient to the ingredient table of db
+    public void addToCocktailIngredientTable(Cocktail cocktail) {
+        //add the ingredients of a cocktail to the cocktailIngredient & ingredient tables of db
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        List<CocktailIngredient> ingredients = cocktail.getIngredients();
+
+        for (CocktailIngredient ing : ingredients) {
+            addToIngredientTable(ing);
+            ing.setCocktailId(cocktail.getId());
+            ing.setIngredientId(getIngredientId(ing.getName()));
+
+            addCocktailIngredientToDB(db,ing.getCocktailId(),ing.getIngredientId(),ing.getQuantity(), ing.getMeasurement(),ing.isMain(),ing.isGarnish());
+        }
     }
 
-    public void addToCocktailIngredientTable(CocktailIngredient ingredient) {
-        //TODO: Create method to add the cocktail to the method table of db
+    public void addToIngredientTable(CocktailIngredient ingredient) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        if (!containsIngredient(ingredient.getName())) {
+            addIngredientToDB(db,ingredient.getName(),ingredient.getType());
+        }
+        ingredient.setIngredientId(getIngredientId(ingredient.getName()));
     }
 
     public int getCocktailId(String name) {
@@ -166,7 +139,7 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
             int i = cursor.getInt(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_ID));
             cursor.close();
             return i;
-        } catch (Exception e) {
+        } catch (CursorIndexOutOfBoundsException e) {
             return -1;
         }
     }
@@ -198,7 +171,7 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
 
         String sql = "SELECT "+S.INGREDIENT_COL_ID +
                 " FROM " + S.INGREDIENT_TABLE_NAME +
-                " WHERE "+ S.INGREDIENT_COL_NAME + " = "+ name +";";
+                " WHERE "+ S.INGREDIENT_COL_NAME + " = '"+ name +"';";
 
         try {
             Cursor cursor = db.rawQuery(sql, null);
@@ -206,7 +179,7 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
             int i = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_COL_ID));
             cursor.close();
             return i;
-        } catch (Exception e) {
+        } catch (CursorIndexOutOfBoundsException e) {
             return -1;
         }
 
@@ -255,6 +228,16 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+
+    public static void addIngredientToDB(SQLiteDatabase db, String name, String type) {
+
+        String s = "INSERT INTO " + S.INGREDIENT_TABLE_NAME +
+                " VALUES (null, '" +
+                name + "', '" +
+                type + "');";
+
+        db.execSQL(s);
+    }
 
 
 

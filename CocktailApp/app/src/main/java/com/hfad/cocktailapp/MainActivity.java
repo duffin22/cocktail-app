@@ -21,7 +21,11 @@ public class MainActivity extends AppCompatActivity {
         Cocktail cocktail = new Cocktail();
         helper.addToCocktailTable(cocktail);
         helper.addToMethodTable(cocktail);
+        helper.addToCocktailIngredientTable(cocktail);
 
+        helper.addToCocktailTable(cocktail);
+        helper.addToMethodTable(cocktail);
+        helper.addToCocktailIngredientTable(cocktail);
 
 
         View addButton = (Button) findViewById(R.id.addCocktail);
@@ -29,11 +33,6 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
-
-
                 Intent i = new Intent(MainActivity.this, AddCocktailActivity.class);
                 startActivity(i);
             }
