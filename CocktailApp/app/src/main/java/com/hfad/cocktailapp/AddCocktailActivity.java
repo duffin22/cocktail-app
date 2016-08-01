@@ -97,9 +97,9 @@ public class AddCocktailActivity extends AppCompatActivity {
     public ArrayList<CocktailIngredient> makeIngredientArrayList() {
         ArrayList<CocktailIngredient> ingredients = new ArrayList<>();
 
-        CocktailIngredient exampleOne = new CocktailIngredient("Lime Juice", "Non-Alcoholic",15,"ml");
-        CocktailIngredient exampleTwo = new CocktailIngredient("Vodka", "Alcoholic",30,"ml");
-        CocktailIngredient exampleThree = new CocktailIngredient("Lime Wedges", "Non-Alcoholic",4,"");
+        CocktailIngredient exampleOne = new CocktailIngredient("Lime Juice",15,"ml");
+        CocktailIngredient exampleTwo = new CocktailIngredient("Vodka",30,"ml");
+        CocktailIngredient exampleThree = new CocktailIngredient("Lime Wedges",4,"");
 
         ingredients.add(exampleOne);
         ingredients.add(exampleTwo);

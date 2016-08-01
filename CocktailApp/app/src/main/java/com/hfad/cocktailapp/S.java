@@ -43,8 +43,7 @@ public class S {
     public static final String CREATE_INGREDIENT_TABLE =
             "CREATE TABLE " + INGREDIENT_TABLE_NAME + "(" +
                     INGREDIENT_COL_ID + " integer PRIMARY KEY AUTOINCREMENT, " +
-                    INGREDIENT_COL_NAME + " text, " +
-                    INGREDIENT_COL_TYPE + " text);";
+                    INGREDIENT_COL_NAME + " text);";
 
     public static final String CREATE_METHOD_TABLE =
             "CREATE TABLE " + METHOD_TABLE_NAME + "(" +

@@ -6,39 +6,42 @@ import android.database.sqlite.SQLiteDatabase;
  * Created by matthewtduffin on 28/07/16.
  */
 public class CocktailIngredient {
-    private String name, type;
+    private String name;
     private int cocktailId = -1, ingredientId = -1;
     private int quantity;
     private String measurement;
     private int isMain, isGarnish;
 
-    //4-part constuctor sets isMain and isGarnish to false (0)
-    public CocktailIngredient(String name, String type, int quantity, String measurement) {
+    //3-part constructor from user input (not garnish, not main ingredient)
+    public CocktailIngredient(String name,int quantity, String measurement) {
         this.name = name;
-        this.type = type;
         this.quantity = quantity;
         this.measurement = measurement;
         this.isMain = 0;
         this.isGarnish = 0;
     }
 
-    public CocktailIngredient(int cocktailId, int ingredientId, int quantity, String measurement, int isMain, int isGarnish) {
-        this.cocktailId = cocktailId;
+    //5-part constructor from user input
+    public CocktailIngredient(String name, int quantity, String measurement, int isMain, int isGarnish) {
+        this.name = name;
         this.quantity = quantity;
         this.measurement = measurement;
         this.setMain(isMain);
         this.setGarnish(isGarnish);
     }
 
-    //6-part constructor where isMain and isGarnish can be set
-    public CocktailIngredient(String name, String type, int quantity, String measurement, int isMain, int isGarnish) {
+    //7-part constructor from database information
+    public CocktailIngredient(String name, int cocktailId, int ingredientId, int quantity, String measurement, int isMain, int isGarnish) {
         this.name = name;
-        this.type = type;
+        this.cocktailId = cocktailId;
+        this.ingredientId = ingredientId;
         this.quantity = quantity;
         this.measurement = measurement;
         this.setMain(isMain);
         this.setGarnish(isGarnish);
     }
+
+
 
     public int getCocktailId() {
         return cocktailId;
@@ -57,7 +60,7 @@ public class CocktailIngredient {
     }
 
     public String getQuantityMeasure() {
-        return "" + quantity + measurement;
+        return "" + quantity +" " + measurement;
     }
 
     public String getName() {
@@ -66,14 +69,6 @@ public class CocktailIngredient {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public int getQuantity() {

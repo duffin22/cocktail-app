@@ -35,11 +35,11 @@ public class Initializer {
         meths.add(new MethodItem("Place the lime wheel on the edge of the glass.",3));
 
         List<CocktailIngredient> ings = new ArrayList<>();
-        ings.add(new CocktailIngredient("Vodka Citron", "Alcoholic",40,"ml",1,0));
-        ings.add(new CocktailIngredient("Cointreau", "Alcoholic",15,"ml"));
-        ings.add(new CocktailIngredient("Fresh Lime Juice", "Non-Alcoholic",15,"ml"));
-        ings.add(new CocktailIngredient("Cranberry Juice", "Non-Alcoholic",30,"ml"));
-        ings.add(new CocktailIngredient("Lime Wheel", "Fresh Fruit",1,"",0,1));
+        ings.add(new CocktailIngredient("Vodka Citron",40,"ml",1,0));
+        ings.add(new CocktailIngredient("Cointreau",15,"ml"));
+        ings.add(new CocktailIngredient("Fresh Lime Juice",15,"ml"));
+        ings.add(new CocktailIngredient("Cranberry Juice",30,"ml"));
+        ings.add(new CocktailIngredient("Lime Wheel",1,"",0,1));
 
         return new Cocktail("Cosmopolitan","IBA Official Cocktail", S.CONTEMPORARY_CLASSICS ,meths, ings);
     }
@@ -51,11 +51,11 @@ public class Initializer {
         meths.add(new MethodItem("Float coffee beans on top of the drink to garnish.",3));
 
         List<CocktailIngredient> ings = new ArrayList<>();
-        ings.add(new CocktailIngredient("Vodka", "Alcoholic",50,"ml",1,0));
-        ings.add(new CocktailIngredient("Sugar Syrup", "Non-Alcoholic",10,"ml"));
-        ings.add(new CocktailIngredient("Kahlua", "Alcoholic",10,"ml"));
-        ings.add(new CocktailIngredient("Espresso", "Non-Alcoholic",30,"ml"));
-        ings.add(new CocktailIngredient("Coffee Beans", "Other",3,"",0,1));
+        ings.add(new CocktailIngredient("Vodka",50,"ml",1,0));
+        ings.add(new CocktailIngredient("Sugar Syrup",10,"ml"));
+        ings.add(new CocktailIngredient("Kahlua",10,"ml"));
+        ings.add(new CocktailIngredient("Espresso",30,"ml"));
+        ings.add(new CocktailIngredient("Coffee Beans",3,"",0,1));
 
         return new Cocktail("Espresso Martini","IBA Official Cocktail", S.NEW_ERA_DRINKS ,meths, ings);
     }
@@ -67,10 +67,10 @@ public class Initializer {
         meths.add(new MethodItem("Squeeze oil from lemon peel into drink and place the peel in the glass.",3));
 
         List<CocktailIngredient> ings = new ArrayList<>();
-        ings.add(new CocktailIngredient("Vodka", "Alcoholic",45,"ml",1,0));
-        ings.add(new CocktailIngredient("Raspberry Liquer", "Alcoholic",15,"ml",1,0));
-        ings.add(new CocktailIngredient("Pineapple Juice", "Non-Alcoholic",15,"ml"));
-        ings.add(new CocktailIngredient("Lemon Peel", "Non-Alcoholic",1,"slice",0,1));
+        ings.add(new CocktailIngredient("Vodka",45,"ml",1,0));
+        ings.add(new CocktailIngredient("Raspberry Liquer",15,"ml",1,0));
+        ings.add(new CocktailIngredient("Pineapple Juice",15,"ml"));
+        ings.add(new CocktailIngredient("Lemon Peel",1,"slice",0,1));
 
 
         return new Cocktail("French Martini","IBA Official Cocktail", S.NEW_ERA_DRINKS ,meths, ings);
@@ -83,15 +83,15 @@ public class Initializer {
         meths.add(new MethodItem("Garnish with lemon twist.",3));
 
         List<CocktailIngredient> ings = new ArrayList<>();
-        ings.add(new CocktailIngredient("Vodka", "Alcoholic",15,"ml",1,0));
-        ings.add(new CocktailIngredient("Tequila", "Alcoholic",15,"ml",1,0));
-        ings.add(new CocktailIngredient("White Rum", "Alcoholic",15,"ml",1,0));
-        ings.add(new CocktailIngredient("Gin", "Alcoholic",15,"ml",1,0));
-        ings.add(new CocktailIngredient("Triple Sec", "Alcoholic",15,"ml",1,0));
-        ings.add(new CocktailIngredient("Lemon Juice", "Non-Alcoholic",25,"ml"));
-        ings.add(new CocktailIngredient("Sugar Syrup", "Non-Alcoholic",30,"ml"));
-        ings.add(new CocktailIngredient("Cola", "Non-Alcoholic",1,"dash"));
-        ings.add(new CocktailIngredient("Lemon Twist", "Fresh Fruit",1,"",0,1));
+        ings.add(new CocktailIngredient("Vodka",15,"ml",1,0));
+        ings.add(new CocktailIngredient("Tequila",15,"ml",1,0));
+        ings.add(new CocktailIngredient("White Rum",15,"ml",1,0));
+        ings.add(new CocktailIngredient("Gin",15,"ml",1,0));
+        ings.add(new CocktailIngredient("Triple Sec",15,"ml",1,0));
+        ings.add(new CocktailIngredient("Lemon Juice",25,"ml"));
+        ings.add(new CocktailIngredient("Sugar Syrup",30,"ml"));
+        ings.add(new CocktailIngredient("Cola",1,"dash"));
+        ings.add(new CocktailIngredient("Lemon Twist",1,"",0,1));
 
 
         return new Cocktail("Long Island Iced Tea","IBA Official Cocktail", S.CONTEMPORARY_CLASSICS ,meths, ings);
@@ -104,13 +104,13 @@ public class Initializer {
         meths.add(new MethodItem("Top up with soda water and garnish with lime wheel and a sprig of mint.",3));
 
         List<CocktailIngredient> ings = new ArrayList<>();
-        ings.add(new CocktailIngredient("White Rum", "Alcoholic",40,"ml",1,0));
-        ings.add(new CocktailIngredient("Lime Juice", "Non-Alcoholic",30,"ml"));
-        ings.add(new CocktailIngredient("Mint Sprigs", "Other",6,""));
-        ings.add(new CocktailIngredient("White Sugar", "Other",2,"tsp"));
-        ings.add(new CocktailIngredient("Soda Water", "Non-Alcoholic",1,"dash"));
-        ings.add(new CocktailIngredient("Mint Sprig", "Non-Alcoholic",1,"",0,1));
-        ings.add(new CocktailIngredient("Lime Wheel", "Non-Alcoholic",1,"",0,1));
+        ings.add(new CocktailIngredient("White Rum",40,"ml",1,0));
+        ings.add(new CocktailIngredient("Lime Juice",30,"ml"));
+        ings.add(new CocktailIngredient("Mint Sprigs",6,""));
+        ings.add(new CocktailIngredient("White Sugar",2,"tsp"));
+        ings.add(new CocktailIngredient("Soda Water",1,"dash"));
+        ings.add(new CocktailIngredient("Mint Sprig",1,"",0,1));
+        ings.add(new CocktailIngredient("Lime Wheel",1,"",0,1));
 
 
         return new Cocktail("Mojito","IBA Official Cocktail", S.CONTEMPORARY_CLASSICS ,meths, ings);
@@ -126,12 +126,12 @@ public class Initializer {
 
 
         List<CocktailIngredient> ings = new ArrayList<>();
-        ings.add(new CocktailIngredient("Bourbon", "Alcoholic",45,"ml",1,0));
-        ings.add(new CocktailIngredient("Angostura Bitters", "Alcoholic",2,"dashes"));
-        ings.add(new CocktailIngredient("Sugar Cube", "Alcoholic",1,"ml"));
-        ings.add(new CocktailIngredient("Water", "Non-Alcoholic",1,"splash"));
-        ings.add(new CocktailIngredient("Orange Slice", "Non-Alcoholic",1,"",0,1));
-        ings.add(new CocktailIngredient("Cocktail Cherry", "Non-Alcoholic",1,"",0,1));
+        ings.add(new CocktailIngredient("Bourbon",45,"ml",1,0));
+        ings.add(new CocktailIngredient("Angostura Bitters",2,"dashes"));
+        ings.add(new CocktailIngredient("Sugar Cube",1,"ml"));
+        ings.add(new CocktailIngredient("Water",1,"splash"));
+        ings.add(new CocktailIngredient("Orange Slice",1,"",0,1));
+        ings.add(new CocktailIngredient("Cocktail Cherry",1,"",0,1));
 
 
         return new Cocktail("Old Fashioned","IBA Official Cocktail", S.THE_UNFORGETTABLES ,meths, ings);
@@ -144,11 +144,11 @@ public class Initializer {
         meths.add(new MethodItem("(Alternatively, all ingredients can be shaken and served over ice).",3));
 
         List<CocktailIngredient> ings = new ArrayList<>();
-        ings.add(new CocktailIngredient("White Rum", "Alcoholic",30,"ml",1,0));
-        ings.add(new CocktailIngredient("Pineapple Juice", "Non-Alcoholic",90,"ml"));
-        ings.add(new CocktailIngredient("Coconut Milk", "Non-Alcoholic",30,"ml"));
-        ings.add(new CocktailIngredient("Cocktail Cherry", "Other",1,"",0,1));
-        ings.add(new CocktailIngredient("Pineapple Slice", "Other",1,"",0,1));
+        ings.add(new CocktailIngredient("White Rum",30,"ml",1,0));
+        ings.add(new CocktailIngredient("Pineapple Juice",90,"ml"));
+        ings.add(new CocktailIngredient("Coconut Milk",30,"ml"));
+        ings.add(new CocktailIngredient("Cocktail Cherry",1,"",0,1));
+        ings.add(new CocktailIngredient("Pineapple Slice",1,"",0,1));
 
 
         return new Cocktail("Pina Colada","IBA Official Cocktail", S.CONTEMPORARY_CLASSICS ,meths, ings);

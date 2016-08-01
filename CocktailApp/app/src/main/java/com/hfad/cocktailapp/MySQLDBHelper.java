@@ -37,11 +37,6 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
             db.execSQL(s);
         }
 
-//        List<Cocktail> cocktails = Initializer.makeAllCocktails();
-//
-//        for (Cocktail cocktail : cocktails) {
-//            addToDB(cocktail);
-//        }
 
     }
 
@@ -99,7 +94,7 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         cocktail.setId(getCocktailId(cocktail.getName()));
     }
 
-    public List<Cocktail> getAllCocktails() {
+    public List<Cocktail> getAllCocktailsForHomeScreen() {
         List<Cocktail> cocktails = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -136,7 +131,9 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         String name = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_NAME));
         String category = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_CATEGORY));
         String author = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_AUTHOR));
-        Cocktail c = new Cocktail(name, author,category,meths,ings);
+
+        Cocktail c = new Cocktail(name,author,category,meths,ings);
+        c.setId(id);
 
         cursor.close();
 
@@ -158,8 +155,10 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         while (!cursor.isAfterLast()) {
             int pos = cursor.getInt(cursor.getColumnIndexOrThrow(S.METHOD_COL_METHOD_NUMBER));
             String body = cursor.getString(cursor.getColumnIndexOrThrow(S.METHOD_COL_CONTENT));
+            int methodId = cursor.getInt(cursor.getColumnIndexOrThrow(S.METHOD_COL_ID));
             MethodItem m = new MethodItem(body,pos);
             m.setCocktailId(id);
+            m.setId(methodId);
             methods.add(m);
             cursor.moveToNext();
         }
@@ -169,32 +168,47 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
     }
 
     public List<CocktailIngredient> getAllIngredients(int id) {
-        List<CocktailIngredient> cocktails = new ArrayList<>();
+        List<CocktailIngredient> ingredients = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         String sql = "SELECT *" +
-                " FROM " + S.INGREDIENT_TO_COCKTAIL_TABLE_NAME +
-                " WHERE " + S.INGREDIENT_TO_COCKTAIL_COL_COCKTAIL_ID + " = " + id +
+                " FROM " + S.INGREDIENT_TO_COCKTAIL_TABLE_NAME + "," + S.INGREDIENT_TABLE_NAME +
+                " WHERE " + S.INGREDIENT_TO_COCKTAIL_TABLE_NAME + "." + S.INGREDIENT_TO_COCKTAIL_COL_COCKTAIL_ID + " = " + id +
+                " AND " + S.INGREDIENT_TO_COCKTAIL_TABLE_NAME + "." + S.INGREDIENT_TO_COCKTAIL_COL_INGREDIENT_ID + " = " + S.INGREDIENT_TABLE_NAME + "." + S.INGREDIENT_COL_ID +
                 ";";
 
         Cursor cursor = db.rawQuery(sql, null);
+
         cursor.moveToFirst();
+
         while (!cursor.isAfterLast()) {
-            int cocktailId = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_COCKTAIL_ID));
-            int ingredientId = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_INGREDIENT_ID));
-            int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_QUANTITY));
-            String measure = cursor.getString(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_MEASUREMENT));
-            int isMain = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_IS_MAIN));
-            int isGarnish = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_IS_GARNISH));
-            CocktailIngredient c = new CocktailIngredient(cocktailId, ingredientId, quantity, measure, isMain, isGarnish);
-            c.setName(getIngredientName(ingredientId));
-            c.setType(getIngredientType(ingredientId));
-            cocktails.add(c);
+            //get name from cursor
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(S.INGREDIENT_TABLE_NAME + "." + S.INGREDIENT_COL_NAME));
+            //get cocktailId from cursor
+            int cocktailId = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_TABLE_NAME + "." + S.INGREDIENT_TO_COCKTAIL_COL_COCKTAIL_ID));
+            //get ingredientId from cursor
+            int ingredientId = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_TABLE_NAME + "." + S.INGREDIENT_TO_COCKTAIL_COL_INGREDIENT_ID));
+            //get quantity from cursor
+            int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_TABLE_NAME + "." + S.INGREDIENT_TO_COCKTAIL_COL_QUANTITY));
+            //get measure from cursor
+            String measure = cursor.getString(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_TABLE_NAME + "." + S.INGREDIENT_TO_COCKTAIL_COL_MEASUREMENT));
+            //get isMain from cursor
+            int isMain = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_TABLE_NAME + "." + S.INGREDIENT_TO_COCKTAIL_COL_IS_MAIN));
+            //get isGarnish from cursor
+            int isGarnish = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_TABLE_NAME + "." + S.INGREDIENT_TO_COCKTAIL_COL_IS_GARNISH));
+
+            //create the ingredient object from the above information
+            CocktailIngredient c = new CocktailIngredient(name,cocktailId, ingredientId, quantity, measure, isMain, isGarnish);
+
+            //add the new cocktail Ingredient to the list of ingredients
+            ingredients.add(c);
+
+            //go to next ingredient is the list
             cursor.moveToNext();
         }
         cursor.close();
 
-        return cocktails;
+        return ingredients;
     }
 
     public void addToMethodTable(Cocktail cocktail) {
@@ -208,7 +222,6 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
             method.setCocktailId(getCocktailId(cocktail.getName()));
             addMethodToDB(db, method.getMethod(), method.getCocktailId(), method.getPosition());
         }
-
 
     }
 
@@ -231,9 +244,8 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         if (!containsIngredient(ingredient.getName())) {
-            addIngredientToDB(db,ingredient.getName(),ingredient.getType());
+            addIngredientToDB(db,ingredient.getName());
         }
-        ingredient.setIngredientId(getIngredientId(ingredient.getName()));
     }
 
     public int getCocktailId(String name) {
@@ -279,6 +291,7 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
     public int getIngredientId(String name) {
 
         SQLiteDatabase db = this.getReadableDatabase();
+
 
         String sql = "SELECT "+S.INGREDIENT_COL_ID +
                 " FROM " + S.INGREDIENT_TABLE_NAME +
@@ -380,12 +393,11 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public static void addIngredientToDB(SQLiteDatabase db, String name, String type) {
+    public static void addIngredientToDB(SQLiteDatabase db, String name) {
 
         String s = "INSERT INTO " + S.INGREDIENT_TABLE_NAME +
                 " VALUES (null, '" +
-                name + "', '" +
-                type + "');";
+                name + "');";
 
         db.execSQL(s);
     }

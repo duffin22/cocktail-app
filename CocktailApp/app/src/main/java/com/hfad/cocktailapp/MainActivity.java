@@ -1,12 +1,10 @@
 package com.hfad.cocktailapp;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         MySQLDBHelper helper = MySQLDBHelper.getInstance(MainActivity.this);
 
-        if (helper.getAllCocktails().size() == 0) {
+        if (helper.getAllCocktailsForHomeScreen().size() == 0) {
             List<Cocktail> cocktailss = Initializer.makeAllCocktails();
             for (Cocktail cocktail : cocktailss) {
                 helper.addToDB(cocktail);
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        List<Cocktail> cocktails = helper.getAllCocktails();
+        List<Cocktail> cocktails = helper.getAllCocktailsForHomeScreen();
         recyclerView.setAdapter(new CocktailAdapter(cocktails, R.layout.cocktail_list_item, getApplicationContext()));
 
     }
