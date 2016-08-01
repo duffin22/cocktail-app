@@ -87,7 +87,7 @@ public class AddCocktailActivity extends AppCompatActivity {
 
     public int addIngredientActivity() {
         int toReturn = 0;
-        Button done = (Button) findViewById(R.id.done);
+        Button done = (Button) findViewById(R.id.ingredientDone);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
