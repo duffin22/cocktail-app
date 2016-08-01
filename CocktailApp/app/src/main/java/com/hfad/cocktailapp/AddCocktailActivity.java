@@ -37,12 +37,17 @@ public class AddCocktailActivity extends AppCompatActivity {
         //create a list of ingredients for test purposes
         ingredients = new ArrayList<>();
 
+        final LinearLayout addMethod = (LinearLayout) findViewById(R.id.addMethodLayout);
+        final LinearLayout addIngredient = (LinearLayout) findViewById(R.id.addIngredientLayout);
+
+
         View ingredientButton = (Button) findViewById(R.id.ingredientButton);
         ingredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                LinearLayout addIngredient = (LinearLayout) findViewById(R.id.addIngredientLayout);
+                addMethod.setVisibility(View.GONE);
+                isMethodClicked = false;
                 if (!isIngredientClicked) {
                     addIngredient.setVisibility(View.VISIBLE);
                     int i = addIngredientActivity();
@@ -58,7 +63,8 @@ public class AddCocktailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                LinearLayout addMethod = (LinearLayout) findViewById(R.id.addMethodLayout);
+                addIngredient.setVisibility(View.GONE);
+                isIngredientClicked = false;
                 if (!isMethodClicked) {
                     addMethod.setVisibility(View.VISIBLE);
                 } else {
