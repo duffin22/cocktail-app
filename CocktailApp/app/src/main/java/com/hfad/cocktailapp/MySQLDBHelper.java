@@ -121,6 +121,82 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         return cocktails;
     }
 
+    public Cocktail createCocktailFromId(int id) {
+        List<CocktailIngredient> ings = getAllIngredients(id);
+        List<MethodItem> meths = getAllMethods(id);
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String sql = "SELECT *" +
+                " FROM " + S.COCKTAIL_TABLE_NAME +
+                " WHERE " + S.COCKTAIL_COL_ID + " = " + id + ";";
+
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+
+        String name = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_NAME));
+        String category = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_CATEGORY));
+        String author = cursor.getString(cursor.getColumnIndexOrThrow(S.COCKTAIL_COL_AUTHOR));
+        Cocktail c = new Cocktail(name, author,category,meths,ings);
+
+        cursor.close();
+
+        return c;
+
+    }
+
+    public List<MethodItem> getAllMethods(int id) {
+        List<MethodItem> methods = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String sql = "SELECT *" +
+                " FROM " + S.METHOD_TABLE_NAME +
+                " WHERE " + S.METHOD_COL_COCKTAIL_ID + " = " + id +
+                ";";
+
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int pos = cursor.getInt(cursor.getColumnIndexOrThrow(S.METHOD_COL_METHOD_NUMBER));
+            String body = cursor.getString(cursor.getColumnIndexOrThrow(S.METHOD_COL_CONTENT));
+            MethodItem m = new MethodItem(body,pos);
+            m.setCocktailId(id);
+            methods.add(m);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return methods;
+    }
+
+    public List<CocktailIngredient> getAllIngredients(int id) {
+        List<CocktailIngredient> cocktails = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String sql = "SELECT *" +
+                " FROM " + S.INGREDIENT_TO_COCKTAIL_TABLE_NAME +
+                " WHERE " + S.INGREDIENT_TO_COCKTAIL_COL_COCKTAIL_ID + " = " + id +
+                ";";
+
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int cocktailId = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_COCKTAIL_ID));
+            int ingredientId = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_INGREDIENT_ID));
+            int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_QUANTITY));
+            String measure = cursor.getString(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_MEASUREMENT));
+            int isMain = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_IS_MAIN));
+            int isGarnish = cursor.getInt(cursor.getColumnIndexOrThrow(S.INGREDIENT_TO_COCKTAIL_COL_IS_GARNISH));
+            CocktailIngredient c = new CocktailIngredient(cocktailId, ingredientId, quantity, measure, isMain, isGarnish);
+            c.setName(getIngredientName(ingredientId));
+            c.setType(getIngredientType(ingredientId));
+            cocktails.add(c);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return cocktails;
+    }
+
     public void addToMethodTable(Cocktail cocktail) {
         //add the cocktail's methods to the method table of db
 
@@ -216,6 +292,48 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
             return i;
         } catch (CursorIndexOutOfBoundsException e) {
             return -1;
+        }
+
+    }
+
+    public String getIngredientName(int id) {
+        //checks to see if a cocktail of a certain id is in the db and returns its name. Returns null if not in database
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String sql = "SELECT "+S.INGREDIENT_COL_NAME +
+                " FROM " + S.INGREDIENT_TABLE_NAME +
+                " WHERE "+ S.INGREDIENT_COL_ID + " = "+ (id)+";";
+
+        try {
+            Cursor cursor = db.rawQuery(sql, null);
+            cursor.moveToFirst();
+            String s = cursor.getString(cursor.getColumnIndexOrThrow(S.INGREDIENT_COL_NAME));
+            cursor.close();
+            return s;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    public String getIngredientType(int id) {
+        //checks to see if a cocktail of a certain id is in the db and returns its name. Returns null if not in database
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String sql = "SELECT "+S.INGREDIENT_COL_TYPE +
+                " FROM " + S.INGREDIENT_TABLE_NAME +
+                " WHERE "+ S.INGREDIENT_COL_ID + " = "+ (id)+";";
+
+        try {
+            Cursor cursor = db.rawQuery(sql, null);
+            cursor.moveToFirst();
+            String s = cursor.getString(cursor.getColumnIndexOrThrow(S.INGREDIENT_COL_TYPE));
+            cursor.close();
+            return s;
+        } catch (Exception e) {
+            return null;
         }
 
     }

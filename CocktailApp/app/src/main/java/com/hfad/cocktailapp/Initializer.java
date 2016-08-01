@@ -79,7 +79,7 @@ public class Initializer {
     public static Cocktail makeLongIslandIcedTea() {
         List<MethodItem> meths = new ArrayList<>();
         meths.add(new MethodItem("Add all ingredients (except cola) to a highball glass filled with ice.",1));
-        meths.add(new MethodItem("Stir gently, and add cola.",2));
+        meths.add(new MethodItem("Stir gently, then add cola.",2));
         meths.add(new MethodItem("Garnish with lemon twist.",3));
 
         List<CocktailIngredient> ings = new ArrayList<>();

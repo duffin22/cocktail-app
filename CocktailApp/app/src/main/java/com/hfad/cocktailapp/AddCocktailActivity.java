@@ -35,11 +35,6 @@ public class AddCocktailActivity extends AppCompatActivity {
             addIngredientListItem(i);
         }
 
-        //set list view to be filled by ingredients arrayList
-//        ListView listy = (ListView) findViewById(R.id.ingredientList);
-//        IngredientListAdapter adapty = new IngredientListAdapter(this,ingredients);
-//        listy.setAdapter(adapty);
-//        Utils.setListViewHeightBasedOnChildren(listy);
         addMethodListItem(1,"Do some stuff");
         addMethodListItem(2,"Do some more stuerfvhuyf uoyb3fj i j3u4fik i 34f ib m iu34 fmn i;wiurh oyue r, ouer fm ou ff");
         addMethodListItem(3,"Do even more stuff");
