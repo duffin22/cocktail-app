@@ -22,20 +22,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         MySQLDBHelper helper = MySQLDBHelper.getInstance(MainActivity.this);
-        SQLiteDatabase db = helper.getWritableDatabase();
 
-        Cocktail cocktail = new Cocktail();
-        helper.addToDB(cocktail);
-        cocktail = new Cocktail();
-        helper.addToDB(cocktail);
-        cocktail = new Cocktail();
-        helper.addToDB(cocktail);
-        cocktail = new Cocktail();
-        helper.addToDB(cocktail);
-        cocktail = new Cocktail();
-
-        helper.addToDB(cocktail);
-
+        if (helper.getAllCocktails().size() == 0) {
+            List<Cocktail> cocktailss = Initializer.makeAllCocktails();
+            for (Cocktail cocktail : cocktailss) {
+                helper.addToDB(cocktail);
+            }
+        }
 
         View addButton = (Button) findViewById(R.id.addCocktail);
 

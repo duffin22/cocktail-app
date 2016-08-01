@@ -36,6 +36,13 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
         for (String s : S.CREATE_TABLES) {
             db.execSQL(s);
         }
+
+//        List<Cocktail> cocktails = Initializer.makeAllCocktails();
+//
+//        for (Cocktail cocktail : cocktails) {
+//            addToDB(cocktail);
+//        }
+
     }
 
     @Override
@@ -213,7 +220,6 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
 
     }
 
-
     public static boolean addCocktailToDB(SQLiteDatabase db, String name, String category, String author) {
 
         String s = "INSERT INTO " + S.COCKTAIL_TABLE_NAME +
@@ -255,7 +261,6 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
 
         return true;
     }
-
 
     public static void addIngredientToDB(SQLiteDatabase db, String name, String type) {
 

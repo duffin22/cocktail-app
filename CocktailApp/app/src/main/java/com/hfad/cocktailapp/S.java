@@ -63,4 +63,10 @@ public class S {
                     INGREDIENT_TO_COCKTAIL_COL_IS_GARNISH + " integer);";
 
     public static final String[] CREATE_TABLES = {CREATE_COCKTAIL_TABLE, CREATE_INGREDIENT_TABLE, CREATE_INGREDIENT_TO_COCKTAIL_TABLE, CREATE_METHOD_TABLE};
+
+    public static final String CONTEMPORARY_CLASSICS = "Contemporary Classics";
+    public static final String NEW_ERA_DRINKS = "New Era Drinks";
+    public static final String THE_UNFORGETTABLES = "The Unforgettables";
+
+
 }
