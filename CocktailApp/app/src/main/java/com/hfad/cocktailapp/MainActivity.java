@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
         MySQLDBHelper helper = MySQLDBHelper.getInstance(MainActivity.this);
 
-        if (helper.getAllCocktailsForHomeScreen().size() == 0) {
-            List<Cocktail> cocktailss = Initializer.makeAllCocktails();
-            for (Cocktail cocktail : cocktailss) {
-                helper.addToDB(cocktail);
-            }
+        this.deleteDatabase(S.DB_NAME);
+
+        List<Cocktail> cocktailss = Initializer.makeAllCocktails();
+        for (Cocktail cocktail : cocktailss) {
+            helper.addToDB(cocktail);
         }
 
         View addButton = (Button) findViewById(R.id.addCocktail);

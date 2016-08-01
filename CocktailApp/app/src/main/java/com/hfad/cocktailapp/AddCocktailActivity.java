@@ -9,14 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddCocktailActivity extends AppCompatActivity {
 
     LayoutInflater inflater;
     ViewGroup methodViewGroup, ingredientViewGroup;
+    List<CocktailIngredient> ingredients;
+    boolean isIngredientClicked = false;
 
     private static final int ADD_INGREDIENT_REQUEST = 7;
 
@@ -29,16 +35,7 @@ public class AddCocktailActivity extends AppCompatActivity {
         ingredientViewGroup = (ViewGroup) findViewById(R.id.ingredientList);
 
         //create a list of ingredients for test purposes
-        ArrayList<CocktailIngredient> ingredients = makeIngredientArrayList();
-
-        for (CocktailIngredient i : ingredients) {
-            addIngredientListItem(i);
-        }
-
-        addMethodListItem(1,"Do some stuff");
-        addMethodListItem(2,"Do some more stuerfvhuyf uoyb3fj i j3u4fik i 34f ib m iu34 fmn i;wiurh oyue r, ouer fm ou ff");
-        addMethodListItem(3,"Do even more stuff");
-
+        ingredients = new ArrayList<>();
 
         LayoutTransition l = new LayoutTransition();
         l.enableTransitionType(LayoutTransition.CHANGING);
@@ -48,8 +45,15 @@ public class AddCocktailActivity extends AppCompatActivity {
         ingredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AddCocktailActivity.this, AddIngredientActivity.class);
-                startActivityForResult(i, ADD_INGREDIENT_REQUEST);
+
+                LinearLayout addIngredient = (LinearLayout) findViewById(R.id.addIngredientLayout);
+                if (!isIngredientClicked) {
+                    addIngredient.setVisibility(View.VISIBLE);
+                    int i = addIngredientActivity();
+                } else {
+                    addIngredient.setVisibility(View.GONE);
+                }
+                isIngredientClicked = !isIngredientClicked;
             }
         });
 
@@ -59,6 +63,63 @@ public class AddCocktailActivity extends AppCompatActivity {
             public void onClick(View view) {
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        for (CocktailIngredient i : ingredients) {
+            addIngredientListItem(i);
+        }
+    }
+
+    public int addIngredientActivity() {
+        int toReturn = 0;
+        Button done = (Button) findViewById(R.id.done);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinearLayout addIngredient = (LinearLayout) findViewById(R.id.addIngredientLayout);
+                EditText name = (EditText) findViewById(R.id.addIngredientName);
+                EditText quantity = (EditText) findViewById(R.id.addIngredientQuantity);
+                EditText measurement = (EditText) findViewById(R.id.addIngredientMeasurement);
+                CheckBox main = (CheckBox) findViewById(R.id.addIngredientMain);
+                CheckBox garnish = (CheckBox) findViewById(R.id.addIngredientGarnish);
+
+                String mName = name.getText().toString();
+                int mQuantity;
+                try {
+                    mQuantity = Integer.parseInt(quantity.getText().toString());
+                } catch (Exception e) {
+                    mQuantity = -1;
+                }
+                String mMeasurement = measurement.getText().toString();
+
+                int isMain;
+                int isGarnish;
+
+                if (main.isSelected()) {
+                    isMain = 1;
+                } else {
+                    isMain = 0;
+                }
+
+                if (garnish.isSelected()) {
+                    isGarnish = 1;
+                } else {
+                    isGarnish = 0;
+                }
+
+                CocktailIngredient c = new CocktailIngredient(mName,mQuantity,mMeasurement,isMain,isGarnish);
+                ingredients.add(c);
+                addIngredientListItem(c);
+
+                addIngredient.setVisibility(View.GONE);
+            }
+        });
+
+        return toReturn;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -92,19 +153,5 @@ public class AddCocktailActivity extends AppCompatActivity {
             spacer.setVisibility(View.INVISIBLE);
         }
         methodViewGroup.addView(v);
-    }
-
-    public ArrayList<CocktailIngredient> makeIngredientArrayList() {
-        ArrayList<CocktailIngredient> ingredients = new ArrayList<>();
-
-        CocktailIngredient exampleOne = new CocktailIngredient("Lime Juice",15,"ml");
-        CocktailIngredient exampleTwo = new CocktailIngredient("Vodka",30,"ml");
-        CocktailIngredient exampleThree = new CocktailIngredient("Lime Wedges",4,"");
-
-        ingredients.add(exampleOne);
-        ingredients.add(exampleTwo);
-        ingredients.add(exampleThree);
-
-        return ingredients;
     }
 }

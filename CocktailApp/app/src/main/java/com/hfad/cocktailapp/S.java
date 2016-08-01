@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
  * Created by matthewtduffin on 29/07/16.
  */
 public class S {
+
+    public static final String DB_NAME = "COCKTAIL_DB";
+
     public static final String COCKTAIL_TABLE_NAME = "cocktails";
     public static final String INGREDIENT_TABLE_NAME = "ingredients";
     public static final String METHOD_TABLE_NAME = "methods";

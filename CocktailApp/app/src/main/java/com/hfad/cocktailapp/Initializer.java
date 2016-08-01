@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 public class Initializer {
 
     public Initializer() {
-
     }
 
     public static List<Cocktail> makeAllCocktails() {

@@ -70,6 +70,11 @@ public class MySQLDBHelper extends SQLiteOpenHelper {
     }
 
 
+    public void resetDB() {
+
+    }
+
+
     public void addToDB(Cocktail cocktail) {
         addToCocktailTable(cocktail);
         addToMethodTable(cocktail);

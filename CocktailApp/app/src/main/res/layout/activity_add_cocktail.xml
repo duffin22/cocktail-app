@@ -45,6 +45,51 @@
                 android:layout_marginRight="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginBottom="4dp">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical" android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="50dp"
+                    android:visibility="gone"
+                    android:id="@+id/addIngredientLayout">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Ingredient"
+                        android:id="@+id/addIngredientName"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Quantity"
+                        android:id="@+id/addIngredientQuantity"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Measurement"
+                        android:id="@+id/addIngredientMeasurement"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This is a main ingredient"
+                        android:id="@+id/addIngredientMain"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This is a garnish"
+                        android:id="@+id/addIngredientGarnish"/>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="DONE"
+                        android:id="@+id/done"/>
+
+                </LinearLayout>
             </LinearLayout>
 
             <!--<ListView-->
