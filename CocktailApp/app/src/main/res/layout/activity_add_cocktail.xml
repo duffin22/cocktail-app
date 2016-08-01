@@ -23,13 +23,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Cocktail name"
+                android:id="@+id/nameEdit"
             />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Cocktail type"
+                android:id="@+id/typeEdit"
             />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cocktail author"
+                android:id="@+id/authorEdit"
+                />
 
             <Button
                 android:layout_width="match_parent"
@@ -127,6 +136,7 @@
                             android:layout_weight="1"
                             android:textAlignment="textEnd"
                             android:text="0"
+                            android:id="@+id/addMethodNumber"
                             android:layout_height="match_parent" />
 
                         <EditText
@@ -150,9 +160,20 @@
 
             </LinearLayout>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ADD COCKTAIL"
+                android:background="#bff0"
+                android:id="@+id/addCocktailButton"/>
+
         </LinearLayout>
 
+
+
     </ScrollView>
+
+
 
 
 

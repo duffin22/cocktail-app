@@ -13,6 +13,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     LinearLayoutManager layoutManager;
+    List<Cocktail> cocktails;
+    CocktailAdapter adapty;
+    public static final int ADD_COCKTAIL_CODE = 1987;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +24,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         MySQLDBHelper helper = MySQLDBHelper.getInstance(MainActivity.this);
+        cocktails = helper.getAllCocktailsForHomeScreen();
 
-        this.deleteDatabase(S.DB_NAME);
-
-        List<Cocktail> cocktailss = Initializer.makeAllCocktails();
-        for (Cocktail cocktail : cocktailss) {
-            helper.addToDB(cocktail);
+        if (cocktails.size() == 0) {
+            List<Cocktail> cocktailss = Initializer.makeAllCocktails();
+            for (Cocktail cocktail : cocktailss) {
+                helper.addToDB(cocktail);
+            }
+            cocktails = helper.getAllCocktailsForHomeScreen();
         }
 
         View addButton = (Button) findViewById(R.id.addCocktail);
@@ -34,19 +40,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, AddCocktailActivity.class);
-                startActivity(i);
+                startActivityForResult(i,ADD_COCKTAIL_CODE);
             }
         });
 
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cocktails_recycler_view);
-
         layoutManager = new LinearLayoutManager(this);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cocktails_recycler_view);
 
         recyclerView.setLayoutManager(layoutManager);
 
-        List<Cocktail> cocktails = helper.getAllCocktailsForHomeScreen();
-        recyclerView.setAdapter(new CocktailAdapter(cocktails, R.layout.cocktail_list_item, getApplicationContext()));
+        adapty = new CocktailAdapter(cocktails, R.layout.cocktail_list_item, getApplicationContext());
+        recyclerView.setAdapter(adapty);
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ADD_COCKTAIL_CODE) {
+            if (resultCode == RESULT_OK) {
+                MySQLDBHelper helper = MySQLDBHelper.getInstance(MainActivity.this);
+
+                cocktails = helper.getAllCocktailsForHomeScreen();
+                adapty.notifyDataSetChanged();
+                final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cocktails_recycler_view);
+                recyclerView.setAdapter(adapty);
+            }
+        }
     }
 }

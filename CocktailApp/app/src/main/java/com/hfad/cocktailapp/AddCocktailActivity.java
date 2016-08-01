@@ -22,6 +22,7 @@ public class AddCocktailActivity extends AppCompatActivity {
     LayoutInflater inflater;
     ViewGroup methodViewGroup, ingredientViewGroup;
     List<CocktailIngredient> ingredients;
+    List<MethodItem> methods;
     boolean isIngredientClicked = false, isMethodClicked = false;
 
     private static final int ADD_INGREDIENT_REQUEST = 7;
@@ -31,11 +32,14 @@ public class AddCocktailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cocktail);
 
+        final MySQLDBHelper helper = MySQLDBHelper.getInstance(AddCocktailActivity.this);
+
         methodViewGroup = (ViewGroup) findViewById(R.id.methodList);
         ingredientViewGroup = (ViewGroup) findViewById(R.id.ingredientList);
 
         //create a list of ingredients for test purposes
         ingredients = new ArrayList<>();
+        methods = new ArrayList<>();
 
         final LinearLayout addMethod = (LinearLayout) findViewById(R.id.addMethodLayout);
         final LinearLayout addIngredient = (LinearLayout) findViewById(R.id.addIngredientLayout);
@@ -66,12 +70,35 @@ public class AddCocktailActivity extends AppCompatActivity {
                 addIngredient.setVisibility(View.GONE);
                 isIngredientClicked = false;
                 if (!isMethodClicked) {
+                    TextView number = (TextView) findViewById(R.id.addMethodNumber);
+                    number.setText(""+(methods.size()+1));
                     addMethod.setVisibility(View.VISIBLE);
+                    int i = addMethodActivity();
                 } else {
                     addMethod.setVisibility(View.GONE);
                 }
                 isMethodClicked = !isMethodClicked;
 
+            }
+        });
+
+        View addCocktailButton = (Button) findViewById(R.id.addCocktailButton);
+        addCocktailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editName = (EditText) findViewById(R.id.nameEdit);
+                EditText editAuthor = (EditText) findViewById(R.id.authorEdit);
+                EditText editCategory = (EditText) findViewById(R.id.typeEdit);
+
+                String mName = editName.getText().toString();
+                String mAuthor = editAuthor.getText().toString();
+                String mCategory = editCategory.getText().toString();
+
+                Cocktail c = new Cocktail(mName, mAuthor, mCategory, methods, ingredients);
+                helper.addToDB(c);
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }
@@ -83,6 +110,31 @@ public class AddCocktailActivity extends AppCompatActivity {
         for (CocktailIngredient i : ingredients) {
             addIngredientListItem(i);
         }
+    }
+
+    public int addMethodActivity() {
+        int toReturn = 0;
+        Button done = (Button) findViewById(R.id.methodDone);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinearLayout addIngredient = (LinearLayout) findViewById(R.id.addMethodLayout);
+                EditText body = (EditText) findViewById(R.id.addMethodBody);
+
+                String mBody = body.getText().toString();
+                int mNumber = methods.size()+1;
+
+                MethodItem m = new MethodItem(mBody,mNumber);
+                methods.add(m);
+                addMethodListItem(m.getPosition(),m.getMethod());
+
+                addIngredient.setVisibility(View.GONE);
+                isIngredientClicked = false;
+                isMethodClicked = false;
+            }
+        });
+
+        return toReturn;
     }
 
     public int addIngredientActivity() {
@@ -158,12 +210,10 @@ public class AddCocktailActivity extends AppCompatActivity {
         View v = inflater.inflate(R.layout.method_list_item, methodViewGroup, false);
         TextView number = (TextView) v.findViewById(R.id.methodNumber);
         TextView body = (TextView) v.findViewById(R.id.methodBody);
-        View spacer = v.findViewById(R.id.spacer);
+
         number.setText("" +i+".");
         body.setText(method);
-        if (i == 1) {
-            spacer.setVisibility(View.INVISIBLE);
-        }
+
         methodViewGroup.addView(v);
     }
 }
