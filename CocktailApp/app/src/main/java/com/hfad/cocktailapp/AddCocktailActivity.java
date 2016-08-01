@@ -22,7 +22,7 @@ public class AddCocktailActivity extends AppCompatActivity {
     LayoutInflater inflater;
     ViewGroup methodViewGroup, ingredientViewGroup;
     List<CocktailIngredient> ingredients;
-    boolean isIngredientClicked = false;
+    boolean isIngredientClicked = false, isMethodClicked = false;
 
     private static final int ADD_INGREDIENT_REQUEST = 7;
 
@@ -36,10 +36,6 @@ public class AddCocktailActivity extends AppCompatActivity {
 
         //create a list of ingredients for test purposes
         ingredients = new ArrayList<>();
-
-        LayoutTransition l = new LayoutTransition();
-        l.enableTransitionType(LayoutTransition.CHANGING);
-        methodViewGroup.setLayoutTransition(l);
 
         View ingredientButton = (Button) findViewById(R.id.ingredientButton);
         ingredientButton.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +57,15 @@ public class AddCocktailActivity extends AppCompatActivity {
         methodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                LinearLayout addMethod = (LinearLayout) findViewById(R.id.addMethodLayout);
+                if (!isMethodClicked) {
+                    addMethod.setVisibility(View.VISIBLE);
+                } else {
+                    addMethod.setVisibility(View.GONE);
+                }
+                isMethodClicked = !isMethodClicked;
+
             }
         });
     }
@@ -116,6 +121,7 @@ public class AddCocktailActivity extends AppCompatActivity {
                 addIngredientListItem(c);
 
                 addIngredient.setVisibility(View.GONE);
+                isIngredientClicked = !isIngredientClicked;
             }
         });
 
